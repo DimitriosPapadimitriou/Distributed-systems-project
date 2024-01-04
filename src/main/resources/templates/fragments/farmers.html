@@ -1,0 +1,29 @@
+<farmers>
+  <div th:if="${ not#lists.isEmpty(farmers)}">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="farmer : ${farmers}">
+        <td th:text="${farmer.fullName}"></td>
+        <td th:text="${farmer.email}"></td>
+<!--        <td th:if="${farmer.id}"><a class="btn btn-info" th:href="@{/farmer/{id}(id=${farmer.id})}">Edit</a>-->
+<!--          <button type="button" class="btn btn-danger" th:id="${student.id}"-->
+<!--                  name="deleteStudent"><i class="remove user icon"></i>-->
+<!--            Delete</button>-->
+<!--          <a class="btn btn-primary" th:href="@{/assignment/{id}(id=${student.id})}">Assignments</a>-->
+<!--          <a class="btn btn-primary" th:href="@{/course/student/{id}(id=${student.id})}">My Courses</a>-->
+<!--          <a class="btn btn-primary" th:href="@{/course/student/new/{id}(id=${student.id})}">Add Course</a>-->
+<!--        </td>-->
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${ #lists.isEmpty(farmers)}">
+    No Farmers found!
+  </div>
+</farmers>
