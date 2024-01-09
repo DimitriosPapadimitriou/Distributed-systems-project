@@ -1,5 +1,11 @@
-<footer>
+<footer xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
   <div class="container">
+    <div sec:authorize="isAuthenticated()">
+      Authenticated username:
+      <span sec:authentication="name"></span>
+      Authenticated user roles:
+      <span sec:authentication="principal.authorities"></span>
+    </div>
     <hr/>
     <p>&copy; 2023 My Awesome Website. All rights reserved.</p>
   </div>
