@@ -1,6 +1,6 @@
 package com.hua.Distributed.systems.project.service;
 
-import com.hua.Distributed.systems.project.entity.Roles;
+import com.hua.Distributed.systems.project.entity.Role;
 import com.hua.Distributed.systems.project.entity.User;
 import com.hua.Distributed.systems.project.repository.RolesRepository;
 import com.hua.Distributed.systems.project.repository.UserRepository;
@@ -23,7 +23,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
 
     @Autowired
     private RolesRepository rolesRepository;
@@ -57,8 +56,8 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
 
-        Roles role =  rolesRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        Set<Roles> roles = new HashSet<>();
+        Role role =  rolesRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);
         user = userRepository.save(user);

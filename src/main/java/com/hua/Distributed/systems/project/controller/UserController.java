@@ -1,6 +1,6 @@
 package com.hua.Distributed.systems.project.controller;
 
-import com.hua.Distributed.systems.project.entity.Roles;
+import com.hua.Distributed.systems.project.entity.Role;
 import com.hua.Distributed.systems.project.entity.User;
 import com.hua.Distributed.systems.project.repository.RolesRepository;
 import com.hua.Distributed.systems.project.service.UserService;
@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping
 public class UserController {
 
     @Autowired
@@ -42,8 +43,6 @@ public class UserController {
         return "users";
     }
 
-
-    @Secured("ROLE_ADMIN")
     @GetMapping("/user/{user_id}")
     public String showUser(@PathVariable Integer user_id, Model model){
         model.addAttribute("user", userService.getUser(user_id));
@@ -54,7 +53,7 @@ public class UserController {
     @GetMapping("/user/role/delete/{user_id}/{role_id}")
     public String deleteRoleFromUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
         User user = userService.getUser(user_id);
-        Roles role = rolesRepository.findById(role_id).get();
+        Role role = rolesRepository.findById(role_id).get();
         user.getRoles().remove(role);
         userService.updateUser(user);
 
@@ -69,7 +68,7 @@ public class UserController {
     @PostMapping("/user/role/add/{user_id}/{role_id}")
     public String addRoletoUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
         User user = userService.getUser(user_id);
-        Roles role = rolesRepository.findById(role_id).get();
+        Role role = rolesRepository.findById(role_id).get();
         user.getRoles().add(role);
         userService.updateUser(user);
 
@@ -84,7 +83,7 @@ public class UserController {
     @DeleteMapping("user/{user_id}/{role_id}/delete")
     public String deleteUser(@PathVariable Integer user_id, @PathVariable Integer role_id, Model model){
         User user = userService.getUser(user_id);
-        Roles role = rolesRepository.findById(role_id).get();
+        Role role = rolesRepository.findById(role_id).get();
 
         userService.deleteUser(user);
         rolesRepository.delete(role);

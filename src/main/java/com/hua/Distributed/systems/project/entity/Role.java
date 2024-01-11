@@ -3,7 +3,7 @@ package com.hua.Distributed.systems.project.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Roles {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -11,11 +11,11 @@ public class Roles {
     @Column(length = 20)
     private String name;
 
-    public Roles() {
+    public Role() {
 
     }
 
-    public Roles(String name) {
+    public Role(String name) {
         this.name = name;
     }
 

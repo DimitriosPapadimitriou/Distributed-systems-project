@@ -1,36 +1,41 @@
 package com.hua.Distributed.systems.project.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class AppConfig {
 
-//    @Autowired
-//    private UserService userService;
-
-//    @PostConstruct //tried to make some users on startup alla kati leei gia context cycle
-//    public void setUp(){
-//        User user1 = new User("user1", "user1@hua.gr", "user1");
-//        User user2 = new User("user2", "user2@hua.gr", "user2");
-//        User user3 = new User("user3", "user3@hua.gr", "user3");
-//
-//        Set<Roles> roles = new HashSet<>();
-//        roles.add(new Roles("USER"));
-//        user1.setRoles(roles);
-//        user2.setRoles(roles);
-//        roles.add(new Roles("ADMIN"));
-//        user3.setRoles(roles);
-//
-//        userService.saveUser(user1);
-//        userService.saveUser(user2);
-//        userService.saveUser(user3);
-//
-//    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer");
     }
 
+
+    @Bean
+    public OpenAPI openAPI() {
+        OpenAPI info = new OpenAPI().addSecurityItem(new SecurityRequirement().
+                        addList("Bearer Authentication"))
+                .components(new Components().addSecuritySchemes
+                        ("Bearer Authentication", createAPIKeyScheme()))
+                .info(new Info().title("DS LAB 2023 REST API")
+                        .description("This API is used in dl-lab-2023 project")
+                        .version("1.0").contact(new Contact().name("Anargyros Tsadimas")
+                                .email("tsadimas@hua.gr").url("https://tsadimas.github.io"))
+                        .license(new License().name("License of API")
+                                .url("https://swagger.io/license/")));
+        return info;
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
